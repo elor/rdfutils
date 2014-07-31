@@ -1,0 +1,18 @@
+# rdfio
+## Description
+
+rdfio is a python library which allows to read and write LAMMPS-compliant RDF files.
+
+## Installation
+
+    ./autogen.sh
+    ./configure
+    make
+    make install
+
+## Usage
+
+Just import the python module (from python):
+
+    import rdfio
+

@@ -1,0 +1,5 @@
+#TODO
+## next version
+
+* pushversion.sh: also update __version__
+* add write() functions
