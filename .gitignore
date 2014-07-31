@@ -8,3 +8,5 @@ configure
 install-sh
 missing
 py-compile
+autoscan.log
+configure.scan
