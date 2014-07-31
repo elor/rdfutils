@@ -1,0 +1,5 @@
+2014-07-31	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
+
+	* src/rdfutils.py: smoothen and bond_length functions added along its helpers
+	write_file, write_string, write_lines stubs added
+

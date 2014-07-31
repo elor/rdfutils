@@ -3,3 +3,5 @@
 
 * pushversion.sh: also update __version__
 * add write() functions
+* don't import all of numpy
+
