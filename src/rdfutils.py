@@ -69,7 +69,7 @@ def create_coord(rdf, rho):
     return coord
 
 # smoothen RDF data using a gaussian convolution
-def smoothen(rdf, sigma = 0.1):
+def smoothen(rdf, sigma = 0.05):
     rho = get_rho(rdf)
     r = rdf[0]
     rdf = rdf[1]

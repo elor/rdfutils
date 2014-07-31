@@ -2,4 +2,5 @@
 
 	* src/rdfutils.py: smoothen and bond_length functions added along its helpers
 	write_file, write_string, write_lines stubs added
+	smoothen: default sigma reduced for clearer bond length characterization
 
