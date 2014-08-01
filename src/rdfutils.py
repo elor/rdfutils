@@ -9,32 +9,32 @@ import itertools as _itertools
 
 # read a .rdf file and return a 3xN array containing [[radius], [rdf], [coord]]
 def read_file(filename):
-	file = open(filename)
-	return read_lines(file)
+    file = open(filename)
+    return read_lines(file)
 
 # read a single string of the contents of a .rdf file
 def read_string(string):
-	return read_lines(string.split('\n'))
+    return read_lines(string.split('\n'))
 
 # read an array of lines of a .rdf file
 def read_lines(lines):
-	lines = [line.strip().split() for line in lines if not _re.match('^\s*#', line)]
-	firstline = lines[0]
-	assert(len(firstline) == 2)
-	lines = [[float(x) for x in line[1:]] for line in lines[1:]]
-	return _transpose(lines)
+    lines = [line.strip().split() for line in lines if not _re.match('^\s*#', line)]
+    firstline = lines[0]
+    assert(len(firstline) == 2)
+    lines = [[float(x) for x in line[1:]] for line in lines[1:]]
+    return _transpose(lines)
 
 def write_lines(rdf):
-        raise Exception('Not yet implemented', 'This function has not yet been implemented')
+    raise Exception('Not yet implemented', 'This function has not yet been implemented')
 
 def write_string(rdf):
-        return '\n'.join(write_lines(rdf))
+    return '\n'.join(write_lines(rdf))
 
 def write_file(rdf, filename):
-        file = open(filename, 'w')
-        file.write(write_string(rdf))
-        file.close()
-        return
+    file = open(filename, 'w')
+    file.write(write_string(rdf))
+    file.close()
+    return
 
 # gauss distribution, helper function
 def _gauss(x, mu, sigma):
@@ -64,8 +64,8 @@ def create_coord(rdf, rho):
     coord=[0.0]*len(r)
     
     for i in range(1, len(coord)):
-        coord[i] = coord[i-1] + (rdf[i]*_sphere_shell_volume(r[i], r[i-1])) * rho
-    
+        coord[i] = coord[i-1] + (rdf[i]*_sphere_shell_volume(r[i], r[i-1])) / rho
+        
     return coord
 
 # smoothen RDF data using a gaussian convolution
@@ -77,7 +77,8 @@ def smoothen(rdf, sigma = 0.05):
     sigma /= dr
 
     width = int(len(rdf)/8)
-    pattern = [_gauss(x, width*0.5, sigma) for x in range(0, width)]
+    width += (width+1)%2
+    pattern = [_gauss(x, int(width*0.5), sigma) for x in range(0, width)]
     patternweight = sum(pattern)
     pattern = [ x/patternweight for x in pattern ]
 
@@ -91,6 +92,34 @@ def smoothen(rdf, sigma = 0.05):
 def bond_length(rdf):
     r = rdf[0]
     rdf = rdf[1]
-    peaks = [i for i in range(1, len(r)-1) if (rdf[i]-rdf[i-1])*(rdf[i+1]-rdf[i]) < 0.0 and rdf[i]-rdf[i-1] > 0 and rdf[i] > 1.0]
+    peaks = [i for i in range(1, len(r)-1) if (rdf[i]-rdf[i-1])*(rdf[i+1]-rdf[i]) <= 0.0 and rdf[i]-rdf[i-1] > 0.0 and rdf[i] > 1.0]
 
+    if len(peaks) == 0:
+        return 0.0
+        
     return r[peaks[0]]
+
+def coordination_length(rdf):
+    bondlength = bond_length(rdf)
+    r = rdf[0]
+    rdf = rdf[1]
+
+    valleys = [i for i in range(1, len(r)-1) if (rdf[i]-rdf[i-1])*(rdf[i+1]-rdf[i]) <= 0.0 and rdf[i]-rdf[i-1] < 0.0 and r[i] > bondlength]
+    
+    if len(valleys) == 0:
+        return 0.0
+
+    return r[valleys[0]]
+
+def coordination_number(rdf):
+    bondlength = bond_length(rdf)
+    r = rdf[0]
+    coords = rdf[2]
+    rdf = rdf[1]
+    
+    valleys = [i for i in range(1, len(r)-1) if (rdf[i]-rdf[i-1])*(rdf[i+1]-rdf[i]) <= 0.0 and rdf[i]-rdf[i-1] < 0.0 and r[i] > bondlength]
+    
+    if len(valleys) == 0:
+        return 0.0
+
+    return coords[valleys[0]]

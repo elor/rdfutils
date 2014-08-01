@@ -1,3 +1,9 @@
+2014-08-01	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
+
+	* src/rdfutils.py: indentation fixed to 4 spaces
+	coordination_length() and coordination_number() added
+	create_coord mult/div bug fixed
+
 2014-07-31	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* src/rdfutils.py: smoothen and bond_length functions added along its helpers
