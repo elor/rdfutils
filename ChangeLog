@@ -1,3 +1,8 @@
+2014-08-04	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
+
+	* src/rdfutils.py: get_dr: averaging over differences instead of span
+	get_rho: fixed for crystals and hard peaks
+
 2014-08-01	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* src/rdfutils.py: indentation fixed to 4 spaces

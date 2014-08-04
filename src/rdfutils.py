@@ -47,14 +47,17 @@ def _sphere_shell_volume(r_outer, r_inner):
 
 # get the particle density from a complete set of RDF data
 def get_rho(rdf):
+    rad = rdf[0]
     coord = rdf[2]
-    rdf = rdf[1]
-    rho = _mean([c/r for c,r in zip(coord, rdf) if r > 0.0])
+    dcoord = [C-c for C,c in zip(coord[1:], coord[:-1])]
+    vol = [_sphere_shell_volume(R,r) for R,r in zip(rad[1:], rad[:-1])]
+    rdf = rdf[1][1:]
+    rho = _mean([r*v/d for r,d,v in zip(rdf,dcoord,vol) if d > 0.0])
     return rho
 
 # get step width of a proper radius array (no validation)
-def get_dr(r):
-    dr = (r[-1] - r[0]) / (len(r)-1)
+def get_dr(rad):
+    dr = _mean([R-r for R,r in zip(rad[1:], rad[:-1])])
     return dr
 
 # from radius, rdf data and particle density, create and return coordination data
