@@ -1,3 +1,12 @@
+2014-08-07	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
+
+	* scripts/rdfdata.py: script to print data from rdf files (bondlength, coordination) added
+
+	* scripts/rdfsmooth.py: script to convert raw to smooth rdf data added
+
+	* src/rdfutils.py: write_lines written
+	write_string and write_file enabled
+
 2014-08-04	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* src/rdfutils.py: get_dr: averaging over differences instead of span

@@ -25,7 +25,25 @@ def read_lines(lines):
     return _transpose(lines)
 
 def write_lines(rdf):
-    raise Exception('Not yet implemented', 'This function has not yet been implemented')
+    assert(len(rdf[0]) == len(rdf[1]))
+    assert(len(rdf[0]) == len(rdf[2]))
+
+    rad = rdf[0]
+    coords = rdf[2]
+    rdf = rdf[1]
+
+    lines=[]
+    # comments
+    lines.append('# Radial Distribution Function data, processed by rdfutil. LAMMPS-compatible.')
+    lines.append('# TimeStep Number-of-rows')
+    lines.append('# Row Radius RDF Coordination')
+
+    lines.append("0 %d"%len(rad))
+
+    for i in range(0, len(rad)):
+        lines.append("%d %f %f %f"%(i+1, rad[i], rdf[i], coords[i]))
+
+    return lines
 
 def write_string(rdf):
     return '\n'.join(write_lines(rdf))
@@ -53,7 +71,8 @@ def get_rho(rdf):
     vol = [_sphere_shell_volume(R,r) for R,r in zip(rad[1:], rad[:-1])]
     rdf = rdf[1][1:]
     rho = _mean([r*v/d for r,d,v in zip(rdf,dcoord,vol) if d > 0.0])
-    return rho
+    assert(rho > 0.0)
+    return 1.0/rho
 
 # get step width of a proper radius array (no validation)
 def get_dr(rad):
@@ -67,7 +86,7 @@ def create_coord(rdf, rho):
     coord=[0.0]*len(r)
     
     for i in range(1, len(coord)):
-        coord[i] = coord[i-1] + (rdf[i]*_sphere_shell_volume(r[i], r[i-1])) / rho
+        coord[i] = coord[i-1] + (rdf[i]*_sphere_shell_volume(r[i], r[i-1])) * rho
         
     return coord
 

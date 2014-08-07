@@ -1,7 +1,7 @@
 # rdfutils
 ## Description
 
-rdfio is a python library which allows to read and write LAMMPS-compliant RDF files.
+rdfutils is a python library and a set of rdf-related tools which allow to read and write LAMMPS-compliant RDF files.
 
 ## Installation
 
@@ -12,7 +12,9 @@ rdfio is a python library which allows to read and write LAMMPS-compliant RDF fi
 
 ## Usage
 
-Just import the python module (from python):
+The contents of the scripts/ directory can be used from your PATH, after installation.
+
+For the library itself, just import the python module (from python):
 
     import rdfutils
 
