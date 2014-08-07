@@ -7,6 +7,8 @@
 	* src/rdfutils.py: write_lines written
 	write_string and write_file enabled
 
+	* scripts/rdfploy.py: script to read, smoothen and plot RDF files. Also plots bond/coord lengths
+
 2014-08-04	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* src/rdfutils.py: get_dr: averaging over differences instead of span
