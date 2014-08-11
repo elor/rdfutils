@@ -1,3 +1,7 @@
+2014-08-11	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
+
+	* scripts/rdfpbs.sh: pbs-compatible rdf calculation script added
+
 2014-08-07	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* scripts/rdfdata.py: script to print data from rdf files (bondlength, coordination) added
