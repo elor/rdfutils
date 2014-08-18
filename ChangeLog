@@ -2,6 +2,8 @@
 
 	* Makefile.am: Now installing shell scripts, too
 
+	* scripts/rdfpbs.sh: debugging
+
 2014-08-11	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* scripts/rdfpbs.sh: pbs-compatible rdf calculation script added

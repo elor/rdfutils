@@ -6,25 +6,32 @@
 
 # set up PBS environment (directory and number of cores)
 [ -n "$PBS_O_WORKDIR" ] && cd "$PBS_O_WORKDIR"
-[ -s "$PBS_NODEFILE"] && ncpu=`cat $PBS_NODEFILE | wc -l` || ncpu=2
+[ -s "$PBS_NODEFILE" ] && ncpu=`cat $PBS_NODEFILE | wc -l` || ncpu=2
 
 # remove previous rdf directories
 find * -type d -name '*rdf' -exec rm -rf {} +
 
 [ -d dumps ] && dumpdir=dumps
 [ -d out ] && dumpdir=out
-[ -n "$dumpdir" ] && dumpdir=dumps
+[ -z "$dumpdir" ] && dumpdir=dumps
+
+echo "processing ./$dumpdir/ using $ncpu cores"
 
 process(){
-    [ -n "$1" ] && exit 1
-	  mkdir ${1}rdf || exit 1
-	  pushd ${1}rdf || exit 1
-	  xyz2rdf.sh ../$dumpdir/${1}.xyz  || exit 1
+		local dumpfile="$1"
+    [ -z "$dumpfile" ] && exit 1
+		local rdfdir="`basename "$dumpfile" .xyz`rdf"
+
+		echo "processing $dumpfile"
+
+	  mkdir "$rdfdir" || exit 1
+	  cd "$rdfdir" || exit 1
+	  xyz2rdf.sh "../$dumpfile"  || exit 1
 	  rdfplot.py *.rdf || exit 1
 }
 
 for dumpfile in $dumpdir/*.xyz; do
-	  process `basename $dumpfile .xyz` &
+	  process "$dumpfile" &
 
 	  # wait for ALL children, not ANY of them (as `wait` would)
 	  while (( `jobs -p | wc -l` >= $ncpu )); do sleep 1; done
