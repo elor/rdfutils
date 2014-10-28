@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import corporate_design
-corporate_design.set_layout(layout_type='beamer', size='big')
+corporate_design.set_layout(layout_type='text', size='big')
 from rdfutils import read_file, bond_length, smoothen, coordination_length
 import matplotlib
 matplotlib.use('PDF')
@@ -30,18 +30,23 @@ for filename in sys.argv[1:]:
 
     plt.plot(rdf[0], rdf[1], '-', color='black', label="%s raw"%re.sub(r'^([0-9]*K).*$', r'\1', re.sub(r'_', r'\_', filename)))
     
-    plt.axvline(x=bondlength, color='red')
+    plt.axvline(x=bondlength, color='red', label=r'$r_\text{bond}, r_\text{coord}$')
     plt.axvline(x=coordinationlength, color='red')
 
 #    ymax = max([max(smooth[1]), max(rdf[1])])
     plt.plot(smooth[0], smooth[1], '-', color='green', label="%s smooth"%re.sub(r'^([0-9]*K).*$', r'\1', re.sub(r'_', r'\_', filename)))
 #    plt.plot(smooth[0], [s/ymax for s in smooth[1]], '-', label="%s smooth"%re.sub(r'^([0-9]*K).*$', r'\1', filename))
 plt.legend()
+plt.xlabel(r'r (\AA)')
+plt.ylabel(r'g(r)')
 #plt.show()
 
 #ax=plt.axes()
 #ax.xaxis.set_major_formatter (FormatStrFormatter("%3.1f"))
 #ax.yaxis.set_major_formatter (FormatStrFormatter("%3.2f"))
+
+plt.subplots_adjust(bottom=0.15, left=0.10)
+plt.minorticks_on()
 
 plt.savefig('smoothrdf.pdf')
 plt.close()
