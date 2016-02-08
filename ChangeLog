@@ -1,3 +1,7 @@
+2016-02-08	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
+
+	* .gitlab-ci.yml: auto-build enabled
+
 2014-08-18	Erik E. Lorenz	<erik.e.lorenz@gmail.com>
 
 	* Makefile.am: Now installing shell scripts, too
@@ -35,4 +39,3 @@
 	* src/rdfutils.py: smoothen and bond_length functions added along its helpers
 	write_file, write_string, write_lines stubs added
 	smoothen: default sigma reduced for clearer bond length characterization
-

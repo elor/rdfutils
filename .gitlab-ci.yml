@@ -1,0 +1,11 @@
+server-build:
+  script:
+    - ./autogen.sh && ./configure && make
+  tags:
+    - centos
+
+desktop-build:
+  script:
+    - ./autogen.sh && ./configure && make
+  tags:
+    - xubuntu
